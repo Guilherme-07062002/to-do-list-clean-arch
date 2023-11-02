@@ -1,3 +1,4 @@
+import { TaskDTO } from "@/domain/dtos";
 import { UseCase } from "@/domain/ports";
 import { ApiService, StoreService } from '@/domain/services';
 
@@ -7,8 +8,9 @@ export class ListTasksUseCase implements UseCase {
     private readonly apiService: ApiService
   ) { }
 
-  async execute(): Promise<void> {
+  async execute(): Promise<TaskDTO[]> {
     const response = await this.apiService.list()
-    await this.storeService.list(response)
+    await this.storeService.list()
+    return response
   }
 }

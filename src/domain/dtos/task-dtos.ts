@@ -1,9 +1,6 @@
 export type CreateTaskDTO = {
+    id: number,
     description: string
-}
-
-export type GetTaskDTO = {
-    id: number
 }
 
 export type TaskDTO = {

@@ -7,11 +7,13 @@ export class ReduxStoreService implements StoreService {
     private readonly store: Store,
   ) { }
 
-  async create(data: CreateTaskDTO): Promise<void> {
+  async create(data: CreateTaskDTO): Promise<TaskDTO> {
     this.store.dispatch({ type: 'CREATE', payload: data });
+    return data as TaskDTO;
   }
 
-  async list(data: TaskDTO[]): Promise<void> {
-    this.store.dispatch({ type: 'LIST', payload: data });
+  async list(): Promise<TaskDTO[]> {
+    const state = this.store.getState();
+    return state.tasks;
   }
 }

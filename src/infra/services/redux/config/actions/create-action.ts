@@ -1,4 +1,5 @@
 import { CreateTaskDTO } from "@/domain/dtos";
+import { Task } from "@/domain/entities";
 
 export enum CreateActionTypes {
   CREATE = 'CREATE',
@@ -6,10 +7,10 @@ export enum CreateActionTypes {
 
 export interface CreateAction {
   type: CreateActionTypes.CREATE;
-  payload: CreateTaskDTO;
+  payload: Task;
 }
 
-export const CreateAction = (newTask: CreateTaskDTO): CreateAction => ({
+export const CreateAction = (newTask: Task): CreateAction => ({
   type: CreateActionTypes.CREATE,
   payload: newTask
 })
