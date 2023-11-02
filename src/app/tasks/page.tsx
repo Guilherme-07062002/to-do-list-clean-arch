@@ -2,8 +2,13 @@
 
 import { Task } from "@/domain/entities";
 import { useEffect, useState } from "react";
-import { makeCreateTaskUseCase, makeListTasksUseCase } from "@/main/factories";
+import {
+  MakeDeleteTaskUseCase,
+  makeCreateTaskUseCase,
+  makeListTasksUseCase,
+} from "@/main/factories";
 import { initialState } from "@/infra/services/redux/config/store";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import {
   Button,
@@ -17,6 +22,7 @@ import {
 export default function Tasks() {
   const createTaskUsecase = makeCreateTaskUseCase();
   const listTasksUsecase = makeListTasksUseCase();
+  const deleteTaskUsecase = MakeDeleteTaskUseCase();
 
   const [tasks, setTasks] = useState(initialState.tasks);
   const [newTask, setNewTask] = useState("");
@@ -24,12 +30,13 @@ export default function Tasks() {
   const handleAddTask = async () => {
     const data = { id: tasks.length + 1, description: newTask };
     await createTaskUsecase.execute(data);
+    setNewTask("");
     loadTasks();
   };
 
   const loadTasks = async () => {
     const tasks = await listTasksUsecase.execute();
-    const result = tasks.map((task) => new Task(task));
+    const result = await tasks.map((task) => new Task(task));
     setTasks(result);
   };
 
@@ -38,8 +45,11 @@ export default function Tasks() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function handleCheckboxClick(task: Task): void {
-    console.log(task);
+  async function handleDeleteTask(task: Task) {
+    console.log("deleta " + JSON.stringify(task));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await deleteTaskUsecase.execute({ id: task.id });
+    await loadTasks();
   }
 
   return (
@@ -73,22 +83,22 @@ export default function Tasks() {
         </Button>
       </Grid>
 
-      <Grid
-        item
-        xs={12}
-        sm={2}
-        display={"flex"}
-        flexDirection={"column"}
-        justifyContent={"center"}
-        alignItems={"center"}
-      >
-        <FormGroup>
+      <Grid item xs={12} sm={2}>
+        <FormGroup
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "5vh",
+          }}
+        >
           {tasks.map((task, index) =>
             index < 5 ? (
               <FormControlLabel
-                key={index}
+                key={task.id}
                 control={
-                  <Checkbox onChange={() => handleCheckboxClick(task)} />
+                  <Checkbox
+                    onClick={async () => await handleDeleteTask(task)}
+                  />
                 }
                 label={task.description}
               />

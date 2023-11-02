@@ -1,4 +1,3 @@
-import { CreateTaskDTO } from "@/domain/dtos";
 import { Task } from "@/domain/entities";
 
 export enum CreateActionTypes {

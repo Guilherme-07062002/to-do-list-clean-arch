@@ -7,3 +7,7 @@ export type TaskDTO = {
     id: number,
     description: string
 }
+
+export type DeleteTaskDTO = {
+    id: number
+}
