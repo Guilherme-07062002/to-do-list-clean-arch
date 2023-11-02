@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import styles from "./page.module.css";
-import { makeCreateTaskUseCase, makeListTasksUseCase } from "@/main/factories";
 import { Task } from "@/domain/entities";
+import { useEffect, useState } from "react";
+import { makeCreateTaskUseCase, makeListTasksUseCase } from "@/main/factories";
 import { initialState } from "@/infra/services/redux/config/store";
 
 export default function Home() {
@@ -14,11 +14,8 @@ export default function Home() {
   const [newTask, setNewTask] = useState("");
 
   const handleAddTask = async () => {
-    const tasks = await listTasksUsecase.execute();
-    await createTaskUsecase.execute({
-      id: tasks.length + 1,
-      description: newTask,
-    });
+    const data = { id: tasks.length + 1, description: newTask };
+    await createTaskUsecase.execute(data);
     loadTasks();
   };
 
@@ -30,7 +27,7 @@ export default function Home() {
 
   useEffect(() => {
     loadTasks();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
