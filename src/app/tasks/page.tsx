@@ -73,15 +73,27 @@ export default function Tasks() {
         </Button>
       </Grid>
 
-      <Grid item xs={12} sm={2} display={"flex"} flexDirection={"column"} justifyContent={'center'} alignItems={'center'}>
+      <Grid
+        item
+        xs={12}
+        sm={2}
+        display={"flex"}
+        flexDirection={"column"}
+        justifyContent={"center"}
+        alignItems={"center"}
+      >
         <FormGroup>
-          {tasks.map((task, index) => (
-            <FormControlLabel
-              key={index}
-              control={<Checkbox onChange={() => handleCheckboxClick(task)} />}
-              label={task.description}
-            />
-          ))}
+          {tasks.map((task, index) =>
+            index < 5 ? (
+              <FormControlLabel
+                key={index}
+                control={
+                  <Checkbox onChange={() => handleCheckboxClick(task)} />
+                }
+                label={task.description}
+              />
+            ) : null
+          )}
         </FormGroup>
       </Grid>
     </Grid>
