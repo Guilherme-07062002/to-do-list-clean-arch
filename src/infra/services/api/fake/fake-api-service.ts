@@ -4,6 +4,7 @@ import { ApiService } from "@/domain/services";
 
 export class FakeApiService implements ApiService {
   public tasks: Task[] = []
+
   async create(data: CreateTaskDTO): Promise<TaskDTO> {
     this.tasks.push(new Task({ id: this.tasks.length + 1, ...data }));
     return {

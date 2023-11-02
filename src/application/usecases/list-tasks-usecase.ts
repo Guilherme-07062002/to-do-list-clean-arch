@@ -1,14 +1,14 @@
-import { TaskDTO } from "@/domain/dtos";
 import { UseCase } from "@/domain/ports";
-import { StoreService } from '@/domain/services';
+import { ApiService, StoreService } from '@/domain/services';
 
 export class ListTasksUseCase implements UseCase {
   constructor(
-    private readonly storeService: StoreService
+    private readonly storeService: StoreService,
+    private readonly apiService: ApiService
   ) { }
-  
-  async execute(): Promise<TaskDTO[]> {
-    const response = await this.storeService.list()
-    return response
+
+  async execute(): Promise<void> {
+    const response = await this.apiService.list()
+    await this.storeService.list(response)
   }
 }

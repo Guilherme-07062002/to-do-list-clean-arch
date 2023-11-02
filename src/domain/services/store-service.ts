@@ -1,6 +1,6 @@
-import { CreateTaskDTO } from "../dtos";
+import { CreateTaskDTO, TaskDTO } from "../dtos";
 
 export interface StoreService {
   create(data: CreateTaskDTO): Promise<void>;
-  list(data: void): Promise<void>;
+  list(data: TaskDTO[]): Promise<void>;
 }
