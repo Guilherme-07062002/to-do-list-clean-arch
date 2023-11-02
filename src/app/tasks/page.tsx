@@ -54,8 +54,9 @@ export default function Tasks() {
     >
       <Grid
         item
-        xs={12}
-        sm={4}
+        xs={10}
+        sm={6}
+        md={4}
         display={"flex"}
         flexDirection={"column"}
         gap={"2vh"}
@@ -72,7 +73,7 @@ export default function Tasks() {
         </Button>
       </Grid>
 
-      <Grid item xs={12} sm={4} display={"flex"} flexDirection={"column"}>
+      <Grid item xs={12} sm={2} display={"flex"} flexDirection={"column"} justifyContent={'center'} alignItems={'center'}>
         <FormGroup>
           {tasks.map((task, index) => (
             <FormControlLabel
