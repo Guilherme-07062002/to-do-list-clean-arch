@@ -1,0 +1,5 @@
+{
+  "exportall.config.relExclusion": [
+    "/src/infra/services/redux/config/actions/index.ts"
+  ]
+}
