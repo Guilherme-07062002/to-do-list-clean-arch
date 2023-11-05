@@ -46,7 +46,6 @@ export default function Tasks() {
   }, []);
 
   async function handleDeleteTask(task: Task) {
-    console.log("deleta " + JSON.stringify(task));
     await new Promise((resolve) => setTimeout(resolve, 1000));
     await deleteTaskUsecase.execute({ id: task.id });
     await loadTasks();
