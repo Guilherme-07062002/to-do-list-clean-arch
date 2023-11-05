@@ -1,14 +1,13 @@
 "use client";
 
-import { Task } from "@/domain/entities";
 import { useEffect, useState } from "react";
+import { initialState } from "@/infra/services/redux/config/store";
+import { Task } from "@/domain/entities";
 import {
   MakeDeleteTaskUseCase,
   makeCreateTaskUseCase,
   makeListTasksUseCase,
 } from "@/main/factories";
-import { initialState } from "@/infra/services/redux/config/store";
-import DeleteIcon from "@mui/icons-material/Delete";
 
 import {
   Button,
@@ -28,7 +27,8 @@ export default function Tasks() {
   const [newTask, setNewTask] = useState("");
 
   const handleAddTask = async () => {
-    const data = { id: tasks.length + 1, description: newTask };
+    const lastTask = tasks[tasks.length - 1] || { id: 0 };
+    const data = { id: lastTask.id + 1, description: newTask };
     await createTaskUsecase.execute(data);
     setNewTask("");
     loadTasks();
@@ -58,8 +58,8 @@ export default function Tasks() {
       flexDirection={"row"}
       justifyContent={"center"}
       alignItems={"center"}
-      height={"100vh"}
-      gap={"5%"}
+      height={"90vh"}
+      gap={"5vh"}
     >
       <Grid
         item
@@ -82,12 +82,12 @@ export default function Tasks() {
         </Button>
       </Grid>
 
-      <Grid item xs={12} sm={2}>
+      <Grid item xs={8} sm={2}>
         <FormGroup
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: "5vh",
+            gap: "2vh",
           }}
         >
           {tasks.map((task, index) =>
